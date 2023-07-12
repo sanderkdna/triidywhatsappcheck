@@ -5,9 +5,9 @@ const VerifyToken = (req, res) => {
     
     try{
         var accessToken = "RTQWWTVHBDEJHJKIKIKNDS9090DS";
-        
-        var token = req.query["hub.verify_token"];
-        var challenge = req.query["hub.challenge"];
+        console.log(req.query);
+        var token = req.query["hub_verify_token"];
+        var challenge = req.query["hub_challenge"];
 
         if(challenge != null && token != null && token == accessToken){
             res.send(challenge);
