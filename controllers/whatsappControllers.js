@@ -6,13 +6,13 @@ const VerifyToken = (req, res) => {
     try{
         var accessToken = "RTQWWTVHBDEJHJKIKIKNDS9090DS";
         console.log(req.query);
-        var token = req.query["hub_verify_token"];
-        var challenge = req.query["hub_challenge"];
+        var token       = req.query["hub.verify_token"];
+        var challenge   = req.query["hub.challenge"];
 
         if(challenge != null && token != null && token == accessToken){
             res.send(challenge);
         }else{
-            res.status(400).send();
+            res.status(400).send(req.query);
         }
 
     }catch(e){
