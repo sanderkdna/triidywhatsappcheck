@@ -36,7 +36,7 @@ const ReceivedMessage = (req, res) => {
             if(text != ""){
                 processMessage.Process(text, number);
             } 
-
+            console.log(messageObject);
         }        
 
         res.send("EVENT_RECEIVED");
