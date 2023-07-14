@@ -29,7 +29,7 @@ const ReceivedMessage = (req, res) => {
         var value = changes["value"];
         var messageObject = value["messages"];
 
-        var origin = value['metadata'].phone_number_Id;
+        var origin = (value['metadata'])['phone_number_Id'];
         
 
         var contactName = (value['contacts'][0])['profile']['name'];
