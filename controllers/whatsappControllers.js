@@ -1,6 +1,8 @@
 const fs = require("fs");
 const myConsole = new console.Console(fs.createWriteStream("./logs.txt"));
 const processMessage = require("../shared/processMessage");
+var request = require('request');
+
 const VerifyToken = (req, res) => {
     
     try{
@@ -27,21 +29,51 @@ const ReceivedMessage = (req, res) => {
         var value = changes["value"];
         var messageObject = value["messages"];
 
+        var origin = value['metadata'].phone_number_Id;
+        
+
+        var contactName = (value['contacts'][0])['profile']['name'];
+        var contactNumber = (value['contacts'][0])['wa_id'];
+        
         if(typeof messageObject != "undefined"){
             var messages = messageObject[0];
             var number = messages["from"];
-
+            
             var text = GetTextUser(messages);
             
             if(text != ""){
                 processMessage.Process(text, number);
             } 
-            console.log(changes);
         }        
+        
+        var metaData = {
+            origin: origin,
+            contactName: contactName,
+            contactNumber: contactNumber,
+            message: text
+        }
 
+        
+        var options = {
+            'method': 'POST',
+            'url': 'https://triidy.admhost.site/api/v1/webhook',
+            'headers': { },
+            formData: metaData
+        };
+
+        request(options, function (error, response) {
+            console.log(response)
+            if (error) throw new Error(error);
+                console.log(response.body);
+                console.log(error);
+            });
+        
         res.send("EVENT_RECEIVED");
+
+
     }catch(e){
-        myConsole.log(e);
+        console.log(metaData);
+        console.log(e);
         res.send("EVENT_RECEIVED");
     }
 }
