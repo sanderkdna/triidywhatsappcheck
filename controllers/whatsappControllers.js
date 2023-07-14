@@ -29,8 +29,8 @@ const ReceivedMessage = (req, res) => {
         var value = changes["value"];
         var messageObject = value["messages"];
 
-        console.log(entry);
-        
+        console.log(value);
+
         var origin = (value['metadata'][0])['phone_number_Id'];
         
 
